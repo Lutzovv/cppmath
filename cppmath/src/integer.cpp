@@ -81,16 +81,6 @@ bool Integer::isCoprime(Integer other) const {
 }
 
 
-Integer Integer::operator+() const {
-    return Integer(sign_, units_);
-}
-
-
-Integer Integer::operator-() const {
-    return Integer(!sign_, units_);
-}
-
-
 Integer Integer::operator+(const Integer other) const {
     if (sign_ == other.sign_) {
         if (sign_) {
@@ -341,6 +331,17 @@ Integer Integer::operator--(int) {
     }
     return copy;
 }
+
+
+Integer Integer::operator+() const {
+    return Integer(false, units_);
+}
+
+
+Integer Integer::operator-() const {
+    return Integer(true, units_);
+}
+
 
 
 std::ostream& operator<<(std::ostream& out, const Integer& obj) {

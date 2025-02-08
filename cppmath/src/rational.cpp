@@ -69,10 +69,10 @@ bool Rational::isFractionProper() const {
 
 bool Rational::isFractionPositive() const {
 	if (numerator_.getSign() == denominator_.getSign()) {
-		return false;
+		return true;
 	}
 	else {
-		return true;
+		return false;
 	}
 }
 
@@ -264,6 +264,22 @@ Rational Rational::operator--(int) {
 	Rational temp = *this;
 	this->numerator_--;
 	return temp;
+}
+
+
+Rational Rational::operator+() const {
+	if (denominator_.getSign() == false) {
+		return Rational(numerator_, denominator_);
+	}
+	return Rational(+numerator_, denominator_);
+}
+
+
+Rational Rational::operator-() const {
+	if (denominator_.getSign() == true) {
+		return Rational(numerator_, denominator_);
+	}
+	return Rational(-numerator_, denominator_);
 }
 
 

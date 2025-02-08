@@ -22,6 +22,7 @@ public:
 		denominator_(denominator) {};
 	Rational(const char* str);
 
+
 	//set
 
 	void setNumerator(Integer numerator);
@@ -37,19 +38,23 @@ public:
 	bool getNumeratorSign() const;
 	bool getDenominatorSing() const;
 
+
 	//is
 
 	bool isFractionProper() const;
 	bool isFractionPositive() const;
+
 
 	//get modified
 
 	Rational getReducingRational() const;
 	Rational ractoinReplacement() const;
 
+
 	//modify
 
 	void reducingRational();
+
 
 	//operators
 
@@ -71,7 +76,12 @@ public:
 	Rational operator++(int);
 	Rational operator--();
 	Rational operator--(int);
+	Rational operator+() const;
+	Rational operator-() const;
 
+
+
+	//input/output
 
 	friend std::istream& operator>>(std::istream& in, Rational& obj);
 	friend std::ostream& operator<<(std::ostream& out, const Rational& obj);
