@@ -2,11 +2,12 @@
 
 //constructor
 
-Rational::Rational(const char* str) {
-	/*char delimiter;
-	std::stringstream ss(str);
+Rational::Rational(const char* char_arr) {
+	std::string str = static_cast<std::string>(char_arr);
+	int del_pos = str.find('/');
 
-	ss >> numerator_ >> delimiter >> denominator_ && delimiter == '/';*/
+	numerator_ = std::stoi(str.substr(0, del_pos));
+	denominator_ = std::stoi(str.substr(del_pos + 1));
 }
 
 

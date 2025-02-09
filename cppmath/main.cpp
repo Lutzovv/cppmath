@@ -1,8 +1,7 @@
 #include "./include/rational.hpp"
 
 int main() {
-    Integer a = -2;
-    Integer b = -3;
+    Rational a = "1/2";
 
-    std::cout << a - b;
+    std::cout << a;
 }
