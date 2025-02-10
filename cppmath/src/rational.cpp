@@ -6,8 +6,8 @@ Rational::Rational(const char* char_arr) {
 	std::string str = static_cast<std::string>(char_arr);
 	int del_pos = str.find('/');
 
-	numerator_ = std::stoi(str.substr(0, del_pos));
-	denominator_ = std::stoi(str.substr(del_pos + 1));
+	numerator_ = Integer(str.substr(0, del_pos));
+	denominator_ = Integer(str.substr(del_pos + 1));
 }
 
 
