@@ -4,7 +4,7 @@
 
 Rational::Rational(const char* char_arr) {
 	std::string str = static_cast<std::string>(char_arr);
-	int del_pos = str.find('/');
+	size_t del_pos = str.find('/');
 
 	numerator_ = Integer(str.substr(0, del_pos));
 	denominator_ = Integer(str.substr(del_pos + 1));

@@ -17,6 +17,11 @@ Integer::Integer(std::string str) {
 }
 
 
+Integer::Integer(const char* char_arr) {
+    Integer(static_cast<std::string>(char_arr));
+}
+
+
 void Integer::setSign(bool sign) {
     this->sign_ = sign;
 }

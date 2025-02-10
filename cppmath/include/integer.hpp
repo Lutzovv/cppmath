@@ -15,6 +15,7 @@ public:
     Integer(bool sign, int units) : sign_(sign), units_(units) {};
     Integer(int number);
     Integer(std::string str);
+    Integer(const char* char_arr);
 
 
     //set

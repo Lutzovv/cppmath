@@ -14,7 +14,7 @@ Real::Real(Rational obj) {
 
 Real::Real(const char* char_arr) {
 	std::string str = static_cast<std::string>(char_arr);
-	int del_pos = str.find('.');
+	size_t del_pos = str.find('.');
 
 	whole_ = Integer(str.substr(0, del_pos));
 	fractional_ = Integer(str.substr(del_pos + 1));
