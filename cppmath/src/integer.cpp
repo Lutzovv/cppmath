@@ -3,7 +3,7 @@
 Integer::Integer(int number) {
     if (number < 0) {
         sign_ = true;
-        units_ = ::abs(number);
+        units_ = std::abs(number);
     }
     else {
         sign_ = false;
@@ -11,15 +11,9 @@ Integer::Integer(int number) {
     }
 }
 
+Integer::Integer(const std::string& str) : Integer(std::stoi(str)) {}
 
-Integer::Integer(std::string str) {
-    Integer(std::stoi(str));
-}
-
-
-Integer::Integer(const char* char_arr) {
-    Integer(static_cast<std::string>(char_arr));
-}
+Integer::Integer(const char* char_arr) : Integer(std::stoi(char_arr)) {}
 
 
 void Integer::setSign(bool sign) {
@@ -86,183 +80,157 @@ bool Integer::isCoprime(Integer other) const {
 }
 
 
-Integer Integer::operator+(const Integer other) const {
-    if (sign_ == other.sign_) {
-        if (sign_) {
-            return -Integer(units_ + other.units_);
-        }
-        else {
-            return (units_ + other.units_);
-        }
+Integer operator+(const Integer& a, const Integer& b) {
+    if (a.sign_ == b.sign_) {
+        return Integer(a.sign_, a.units_ + b.units_);
     }
     else {
-        if (units_ >= other.units_) {
-            if (sign_) {
-                return -Integer(units_ - other.units_);
-            }
-            else {
-                return (units_ - other.units_);
-            }
+        if (a.units_ >= b.units_) {
+            return Integer(a.sign_, a.units_ - b.units_);
         }
         else {
-            if (other.sign_) {
-                return (other.units_ - units_);
-            }
-            else {
-                return -Integer(units_ - other.units_);
-            }
+            return Integer(b.sign_, b.units_ - a.units_);
         }
     }
 }
 
 
-Integer Integer::operator-(const Integer other) const {
-    if (sign_ == other.sign_) {
-        if (sign_) {
-            return (units_ - other.units_) * -1;
-        }
-        else {
-            return (units_ - other.units_);
-        }
-    }
-    else {
-        if (units_ > other.units_) {
-            return sign_ ? (units_ + other.units_) : (units_ + other.units_) * -1;
-        }
-        else {
-            return other.sign_ ? (other.units_ + units_) : (other.units_ + units_) * -1;
-        }
-    }
+Integer operator-(const Integer& a, const Integer& b) {
+    return a + Integer(!b.sign_, b.units_);
 }
 
 
-Integer Integer::operator*(const Integer other) const {
-    if (other.units_ == 0) {
+Integer operator*(const Integer& a, const Integer& b) {
+    if (b.units_ == 0) {
         return 0;
     }
 
-    if (sign_ == other.sign_) {
-        return units_ * other.units_;
+    if (a.sign_ == b.sign_) {
+        return a.units_ * b.units_;
     }
-    return (units_ * other.units_) * -1;
+    return (a.units_ * b.units_) * -1;
 }
 
 
-Integer Integer::operator/(const Integer other) const {
-    if (other.units_ == 0) {
+Integer operator/(const Integer& a, const Integer& b) {
+    if (b.units_ == 0) {
         return 0;
     }
 
-    if (sign_ == other.sign_) {
-        return units_ / other.units_;
+    if (a.sign_ == b.sign_) {
+        return a.units_ / b.units_;
     }
-    return (units_ / other.units_) * -1;
+    return (a.units_ / b.units_) * -1;
 }
 
 
-Integer Integer::operator%(const Integer other) const {
-    if (other.units_ == 0) {
+Integer operator%(const Integer& a, const Integer& b) {
+    if (b.units_ == 0) {
         return 0;
     }
 
-    return Integer(((other * (*this / other)) - *this) * -1);
+    return Integer(((b * (a / b)) - a) * -1);
 }
 
 
-void Integer::operator+=(Integer other) {
+void Integer::operator+=(Integer& other) {
     *this = *this + other;
 }
 
 
-void Integer::operator-=(Integer other) {
+void Integer::operator-=(Integer& other) {
     *this = *this - other;
 }
 
 
-void Integer::operator*=(Integer other) {
+void Integer::operator*=(Integer& other) {
     *this = *this * other;
 }
 
 
-void Integer::operator/=(Integer other) {
+void Integer::operator/=(Integer& other) {
     *this = *this / other;
 }
 
 
-bool Integer::operator==(const Integer other) const {
-    if (sign_ && other.sign_) {
-        return units_ == other.units_;
+void Integer::operator%=(Integer& other) {
+    *this = *this % other;
+}
+
+
+bool operator==(const Integer& a, const Integer& b) {
+    if (a.sign_ && b.sign_) {
+        return a.units_ == b.units_;
     }
-    else if (sign_ == true && other.sign_ == false) {
+    else if (a.sign_ == true && b.sign_ == false) {
         return false;
     }
-    else if (sign_ == false && other.sign_ == true) {
+    else if (a.sign_ == false && b.sign_ == true) {
         return true;
     }
 }
 
 
-bool Integer::operator!=(const Integer other) const {
-    if (!(sign_ && other.sign_)) {
-        return !(units_ == other.units_);
+bool operator!=(const Integer& a, const Integer& b) {
+    if (!(a.sign_ && b.sign_)) {
+        return !(a.units_ == b.units_);
     }
-    else if (sign_ == true && other.sign_ == false) {
+    else if (a.sign_ == true && b.sign_ == false) {
         return true;
     }
-    else if (sign_ == false && other.sign_ == true) {
+    else if (a.sign_ == false && b.sign_ == true) {
         return false;
     }
 }
 
 
-bool Integer::operator>=(const Integer other) const {
-    if (!(sign_ && other.sign_)) {
-        return units_ >= other.units_;
+bool operator>=(const Integer& a, const Integer& b) {
+    if (!(a.sign_ && b.sign_)) {
+        return a.units_ >= b.units_;
     }
-    else if (sign_ == true && other.sign_ == false) {
+    else if (a.sign_ == true && b.sign_ == false) {
         return false;
     }
-    else if (sign_ == false && other.sign_ == true) {
+    else if (a.sign_ == false && b.sign_ == true) {
         return true;
     }
 }
 
 
-bool Integer::operator<=(const Integer other) const {
-    if (!(sign_ && other.sign_)) {
-        return units_ <= other.units_;
+bool operator<=(const Integer& a, const Integer& b) {
+    if (!(a.sign_ && b.sign_)) {
+        return a.units_ <= b.units_;
     }
-    else if (sign_ == true && other.sign_ == false) {
+    else if (a.sign_ == true && b.sign_ == false) {
         return true;
     }
-    else if (sign_ == false && other.sign_ == true) {
+    else if (a.sign_ == false && b.sign_ == true) {
         return false;
     }
 }
 
 
-bool Integer::operator>(const Integer other) const {
-    if (!(sign_ && other.sign_)) {
-        return units_ > other.units_;
+bool operator>(const Integer& a, const Integer& b) {
+    if (!(a.sign_ && b.sign_)) {
+        return a.units_ > b.units_;
     }
-    else if (sign_ == true && other.sign_ == false) {
+    else if (a.sign_ == true && b.sign_ == false) {
         return false;
     }
-    else if (sign_ == false &&
-        other.sign_ == true) {
+    else if (a.sign_ == false && b.sign_ == true) {
         return true;
     }
 }
 
 
-bool Integer::operator<(const Integer other) const {
-    if (!(sign_ && other.sign_)) {
-        return !(units_ < other.units_);
+bool operator<(const Integer& a, const Integer& b) {
+    if (!(a.sign_ && b.sign_)) {
+        return !(a.units_ < b.units_);
     }
-    else if (sign_ == true && other.sign_ == false) {
+    else if (a.sign_ == true && b.sign_ == false) {
         return true;
     }
-    else if (sign_ == false && other.sign_ == true) {
+    else if (a.sign_ == false && b.sign_ == true) {
         return false;
     }
 }

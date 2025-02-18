@@ -1,18 +1,22 @@
 #include "../include/real.hpp"
 
-Real::Real(Integer whole, Integer fractional) {
+Real::Real(Integer whole, Rational fractional) { // doesn't work
 	whole_ = whole;
-	fractional.setSign(false);
+	if (fractional.isFractionProper()) {
+		whole_ = fractional.getNumerator() / fractional.getDenominator();
+	}
 	fractional_ = fractional;
 }
 
 
-Real::Real(Rational obj) {
-	
+Real::Real(const Rational& obj) { // doesn't work
+	if (obj.isFractionProper()) {
+		whole_ = 0;
+	}
 }
 
 
-Real::Real(const char* char_arr) {
+Real::Real(const char* char_arr) { // doesn't work
 	std::string str = static_cast<std::string>(char_arr);
 	size_t del_pos = str.find('.');
 
@@ -21,8 +25,13 @@ Real::Real(const char* char_arr) {
 }
 
 
+Real::Real(double value) {
+
+}
+
+
 std::ostream& operator<<(std::ostream& out, const Real& obj) {
-	std::cout << obj.whole_ << '.' << obj.fractional_;
+	return out << obj.whole_ << '.' << obj.fractional_;
 }
 
 

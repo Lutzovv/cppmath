@@ -6,15 +6,16 @@
 class Real {
 public:
     Real() : Real(0, 0) {}
-    Real(Integer whole, Integer fractional);
-    Real(Rational obj);
+    Real(Integer whole, Rational fractional);
+    Real(const Rational& obj);
     Real(const char*);
-    Real(
+    Real(double);
+    Real( // doesn't work
         int whole,
         int fractional) :
         whole_(whole),
         fractional_(fractional) {};
-    Real(
+    Real( // doesn't work
         unsigned whole,
         unsigned fractional) :
         whole_(whole),
@@ -28,7 +29,7 @@ public:
 
 private:
 	Integer whole_;
-    Integer fractional_;
+    Rational fractional_;
 };
 
 #endif // !_REAL_HPP_

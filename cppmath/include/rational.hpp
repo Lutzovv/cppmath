@@ -43,6 +43,7 @@ public:
 
 	bool isFractionProper() const;
 	bool isFractionPositive() const;
+	bool isSame(const Rational&) const;
 
 
 	//get modified
@@ -58,27 +59,25 @@ public:
 
 	//operators
 
-	Rational operator+(const Rational& other) const;
-	Rational operator-(const Rational& other) const;
-	Rational operator*(const Rational& other) const;
-	Rational operator/(const Rational& other) const;
-	void operator+=(const Rational other);
-	void operator-=(const Rational other);
-	void operator*=(const Rational other);
-	void operator/=(const Rational other);
-	bool operator==(const Rational other) const;
-	bool operator!=(const Rational other) const;
-	bool operator>(const Rational other) const;
-	bool operator<(const Rational other) const;
-	bool operator>=(const Rational other) const;
-	bool operator<=(const Rational other) const;
-	Rational operator++();
-	Rational operator++(int);
-	Rational operator--();
-	Rational operator--(int);
+	friend Rational operator+(const Rational&, const Rational&);
+	friend Rational operator-(const Rational&, const Rational&);
+	friend Rational operator*(const Rational&, const Rational&);
+	friend Rational operator/(const Rational&, const Rational&);
+
+	void operator+=(const Rational& other);
+	void operator-=(const Rational& other);
+	void operator*=(const Rational& other);
+	void operator/=(const Rational& other);
+
+	friend bool operator==(const Rational&, const Rational&);
+	friend bool operator!=(const Rational&, const Rational&);
+	friend bool operator>(const Rational&, const Rational&);
+	friend bool operator<(const Rational&, const Rational&);
+	friend bool operator>=(const Rational&, const Rational&);
+	friend bool operator<=(const Rational&, const Rational&);
+
 	Rational operator+() const;
 	Rational operator-() const;
-
 
 
 	//input/output

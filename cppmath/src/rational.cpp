@@ -78,6 +78,11 @@ bool Rational::isFractionPositive() const {
 }
 
 
+bool Rational::isSame(const Rational& obj) const {
+	return this == &obj;
+}
+
+
 //get modified
 
 Rational Rational::getReducingRational() const {
@@ -105,18 +110,18 @@ void Rational::reducingRational() {
 
 //operators
 
-Rational Rational::operator+(const Rational& other) const {
-	Rational num1 = *this;
-	Rational num2 = other;
+Rational operator+(const Rational& a, const Rational& b) {
+	Rational num1 = a;
+	Rational num2 = b;
 	Integer temp;
 
-	Integer lcm = denominator_.findLCM(num2.denominator_);
+	Integer lcm = num1.denominator_.findLCM(num2.denominator_);
 
 	num1.numerator_ = (lcm / num1.denominator_) * num1.numerator_;
 	num2.numerator_ = (lcm / num2.denominator_) * num2.numerator_;
 
 	temp = num1.numerator_ + num2.numerator_;
-	if (num2.isFractionPositive()) {
+	if (!(num2.isFractionPositive())) {
 		temp.setSign(true);
 	}
 
@@ -124,11 +129,11 @@ Rational Rational::operator+(const Rational& other) const {
 }
 
 
-Rational Rational::operator-(const Rational& other) const {
-	Rational num1 = *this;
-	Rational num2 = other;
+Rational operator-(const Rational& a, const Rational& b) {
+	Rational num1 = a;
+	Rational num2 = b;
 
-	Integer lcm = denominator_.findLCM(num2.denominator_);
+	Integer lcm = num1.denominator_.findLCM(num2.denominator_);
 
 	num1.numerator_ = (lcm / num1.denominator_) * num1.numerator_;
 	num2.numerator_ = (lcm / num2.denominator_) * num2.numerator_;
@@ -139,68 +144,66 @@ Rational Rational::operator-(const Rational& other) const {
 }
 
 
-Rational Rational::operator*(const Rational& other) const {
+Rational operator*(const Rational& a, const Rational& b) {
 	Rational result;
 
-	result.numerator_ = this->numerator_ * other.numerator_;
-	result.denominator_ = this->denominator_ * other.denominator_;
+	result.numerator_ = a.numerator_ * b.numerator_;
+	result.denominator_ = a.denominator_ * b.denominator_;
 
 	return result;
 }
 
 
-Rational Rational::operator/(const Rational& other) const {
-	Rational result = *this * other.ractoinReplacement();
+Rational operator/(const Rational& a, const Rational& b) {
+	Rational result = a * b.ractoinReplacement();
 
 	return result;
 }
 
 
-void Rational::operator+=(const Rational other) {
+void Rational::operator+=(const Rational& other) {
 	*this = *this + other;
 }
 
 
-void Rational::operator-=(const Rational other) {
+void Rational::operator-=(const Rational& other) {
 	*this = *this - other;
 }
 
 
-void Rational::operator*=(const Rational other) {
+void Rational::operator*=(const Rational& other) {
 	*this = *this * other;
 }
 
 
-void Rational::operator/=(const Rational other) {
+void Rational::operator/=(const Rational& other) {
 	*this = *this / other;
 }
 
 
-bool Rational::operator==(const Rational other) const {
+bool operator==(const Rational& a, const Rational& b) {
+	Rational num1 = a;
+	Rational num2 = b;
 
-	Rational num1 = *this;
-	Rational num2 = other;
-
-	Integer lcm = denominator_.findLCM(num2.denominator_);
+	Integer lcm = num1.denominator_.findLCM(num2.getDenominator());
 
 	num1.numerator_ = (lcm / num1.denominator_) * num1.numerator_;
-	num2.numerator_ = (lcm / num2.denominator_) * num2.numerator_;
+	num2.numerator_ = (lcm / num2.numerator_) * num2.numerator_;
 
 	return num1.numerator_ == num2.numerator_;
 }
 
 
-bool Rational::operator!=(const Rational other) const {
-	return !(*this == other);
+bool operator!=(const Rational& a, const Rational& b) {
+	return !(a == b);
 }
 
 
-bool Rational::operator>(const Rational other) const {
+bool operator>(const Rational& a, const Rational& b) {
+	Rational num1 = a;
+	Rational num2 = b;
 
-	Rational num1 = *this;
-	Rational num2 = other;
-
-	Integer lcm = denominator_.findLCM(num2.denominator_);
+	Integer lcm = num1.denominator_.findLCM(num2.denominator_);
 
 	num1.numerator_ = (lcm / num1.denominator_) * num1.numerator_;
 	num2.numerator_ = (lcm / num2.denominator_) * num2.numerator_;
@@ -209,17 +212,16 @@ bool Rational::operator>(const Rational other) const {
 }
 
 
-bool Rational::operator<(const Rational other) const {
-	return !(*this > other);
+bool operator<(const Rational& a, const Rational& b) {
+	return !(a > b);
 }
 
 
-bool Rational::operator>=(const Rational other) const {
+bool operator>=(const Rational& a, const Rational& b) {
+	Rational num1 = a;
+	Rational num2 = b;
 
-	Rational num1 = *this;
-	Rational num2 = other;
-
-	Integer lcm = denominator_.findLCM(num2.denominator_);
+	Integer lcm = num1.denominator_.findLCM(num2.denominator_);
 
 	num1.numerator_ = (lcm / num1.denominator_) * num1.numerator_;
 	num2.numerator_ = (lcm / num2.denominator_) * num2.numerator_;
@@ -228,43 +230,16 @@ bool Rational::operator>=(const Rational other) const {
 }
 
 
-bool Rational::operator<=(const Rational other) const {
+bool operator<=(const Rational& a, const Rational& b) {
+	Rational num1 = a;
+	Rational num2 = b;
 
-	Rational num1 = *this;
-	Rational num2 = other;
-
-	Integer lcm = denominator_.findLCM(num2.denominator_);
+	Integer lcm = num1.denominator_.findLCM(num2.denominator_);
 
 	num1.numerator_ = (lcm / num1.denominator_) * num1.numerator_;
 	num2.numerator_ = (lcm / num2.denominator_) * num2.numerator_;
 
 	return num1.numerator_ <= num2.numerator_;
-}
-
-
-Rational Rational::operator++() {
-	this->numerator_++;
-	return *this;
-}
-
-
-Rational Rational::operator++(int) {
-	Rational temp = *this;
-	this->numerator_++;
-	return temp;
-}
-
-
-Rational Rational::operator--() {
-	this->numerator_--;
-	return *this;
-}
-
-
-Rational Rational::operator--(int) {
-	Rational temp = *this;
-	this->numerator_--;
-	return temp;
 }
 
 

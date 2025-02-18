@@ -14,7 +14,7 @@ public:
     Integer(bool sign, unsigned units) : sign_(sign), units_(units) {};
     Integer(bool sign, int units) : sign_(sign), units_(units) {};
     Integer(int number);
-    Integer(std::string str);
+    Integer(const std::string& str);
     Integer(const char* char_arr);
 
 
@@ -46,21 +46,25 @@ public:
     
     //operators
 
-    Integer operator+(const Integer other) const;
-    Integer operator-(const Integer other) const;
-    Integer operator*(const Integer other) const;
-    Integer operator/(const Integer other) const;
-    Integer operator%(const Integer other) const;
-    void operator+=(Integer other);
-    void operator-=(Integer other);
-    void operator*=(Integer other);
-    void operator/=(Integer other);
-    bool operator==(const Integer other) const;
-    bool operator!=(const Integer other) const;
-    bool operator>(const Integer other) const;
-    bool operator<(const Integer other) const;
-    bool operator>=(const Integer other) const;
-    bool operator<=(const Integer other) const;
+    friend Integer operator+(const Integer&, const Integer&);
+    friend Integer operator-(const Integer&, const Integer&);
+    friend Integer operator*(const Integer&, const Integer&);
+    friend Integer operator/(const Integer&, const Integer&);
+    friend Integer operator%(const Integer&, const Integer&);
+
+    void operator+=(Integer& other);
+    void operator-=(Integer& other);
+    void operator*=(Integer& other);
+    void operator/=(Integer& other);
+    void operator%=(Integer& other);
+
+    friend bool operator==(const Integer&, const Integer&);
+    friend bool operator!=(const Integer&, const Integer&);
+    friend bool operator>(const Integer&, const Integer&);
+    friend bool operator<(const Integer&, const Integer&);
+    friend bool operator>=(const Integer&, const Integer&);
+    friend bool operator<=(const Integer&, const Integer&);
+
     Integer operator++();
     Integer operator++(int);
     Integer operator--();
