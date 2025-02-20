@@ -12,6 +12,7 @@ Real::Real(Integer whole, Rational fractional) { // doesn't work
 Real::Real(const Rational& obj) { // doesn't work
 	if (obj.isFractionProper()) {
 		whole_ = 0;
+		fractional_ = obj.getNumerator() / obj.getDenominator();
 	}
 }
 

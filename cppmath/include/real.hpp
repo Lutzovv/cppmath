@@ -10,14 +10,15 @@ public:
     Real(const Rational& obj);
     Real(const char*);
     Real(double);
-    Real( // doesn't work
+    Real(Integer obj) : whole_(obj), fractional_(Integer(1)) {};
+    Real(
         int whole,
-        int fractional) :
+        Rational fractional) :
         whole_(whole),
         fractional_(fractional) {};
-    Real( // doesn't work
+    Real(
         unsigned whole,
-        unsigned fractional) :
+        Rational fractional) :
         whole_(whole),
         fractional_(fractional) {};
 
