@@ -8,9 +8,9 @@ public:
     Real() : Real(0, 0) {}
     Real(Integer whole, Rational fractional);
     Real(const Rational& obj);
-    Real(const char*);
+    //Real(const char*);
     Real(double);
-    Real(Integer obj) : whole_(obj), fractional_(Integer(1)) {};
+    //Real(Integer obj) : whole_(obj), fractional_(Integer(1)) {};
     Real(
         int whole,
         Rational fractional) :

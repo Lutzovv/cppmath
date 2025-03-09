@@ -1,29 +1,44 @@
 #include "../include/real.hpp"
 
-Real::Real(Integer whole, Rational fractional) { // doesn't work
+Real::Real(Integer whole, Rational fractional) {
 	whole_ = whole;
-	if (fractional.isFractionProper()) {
-		whole_ = fractional.getNumerator() / fractional.getDenominator();
+	if (!fractional.isFractionProper()) {
+		whole_ = whole_ + (fractional.getNumerator() / fractional.getDenominator());
+		Integer newNumerator = fractional.getNumerator() % fractional.getDenominator();
+		fractional_ = Rational(newNumerator, fractional.getDenominator());
 	}
-	fractional_ = fractional;
+	else {
+		fractional_ = fractional;
+	}
 }
 
 
-Real::Real(const Rational& obj) { // doesn't work
+Real::Real(const Rational& obj) {
 	if (obj.isFractionProper()) {
 		whole_ = 0;
-		fractional_ = obj.getNumerator() / obj.getDenominator();
+		fractional_ = obj;
+	}
+	else {
+		whole_ = obj.getNumerator() / obj.getDenominator();
+		Integer newNumerator = obj.getNumerator() % obj.getDenominator();
+		if (newNumerator == 0) {
+			fractional_ = Rational(0, 0);
+		}
+		else
+		{
+			fractional_ = Rational(newNumerator, obj.getDenominator());
+		}
 	}
 }
 
 
-Real::Real(const char* char_arr) { // doesn't work
-	std::string str = static_cast<std::string>(char_arr);
-	size_t del_pos = str.find('.');
-
-	whole_ = Integer(str.substr(0, del_pos));
-	fractional_ = Integer(str.substr(del_pos + 1));
-}
+//Real::Real(const char* char_arr) {
+//	std::string str = static_cast<std::string>(char_arr);
+//	size_t del_pos = str.find('.');
+//
+//	whole_ = Integer(str.substr(0, del_pos));
+//	fractional_ = Integer(str.substr(del_pos + 1));
+//}
 
 
 Real::Real(double value) {
@@ -32,13 +47,17 @@ Real::Real(double value) {
 
 
 std::ostream& operator<<(std::ostream& out, const Real& obj) {
+	if (obj.fractional_.getNumerator() == 0)
+	{
+		return out << obj.whole_ << ".0";
+	}
 	return out << obj.whole_ << '.' << obj.fractional_;
 }
 
 
-std::istream& operator>>(std::istream& in, Real& obj) {
-	std::string str;
-	in >> str;
-	obj = Real(str.c_str());
-	return in;
-}
+//std::istream& operator>>(std::istream& in, Real& obj) {
+//	std::string str;
+//	in >> str;
+//	obj = Real(str.c_str());
+//	return in;
+//}

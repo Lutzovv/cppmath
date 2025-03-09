@@ -213,7 +213,7 @@ bool operator>(const Rational& a, const Rational& b) {
 
 
 bool operator<(const Rational& a, const Rational& b) {
-	return !(a > b);
+	return b > a;
 }
 
 

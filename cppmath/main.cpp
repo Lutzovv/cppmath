@@ -1,9 +1,9 @@
-#include "./include/rational.hpp"
+#include "./include/real.hpp"
 
 int main() {
-    Rational a = "-1/2";
-    Rational b = "2/2";
+    Integer aa = 1;
+    Rational a = "5/3";
+    Real b(a);
 
-    std::cout << a + b << "\n";
-    std::cout << b - a << "\n";
+    std::cout << b;
 }

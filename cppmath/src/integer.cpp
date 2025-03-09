@@ -159,28 +159,15 @@ void Integer::operator%=(Integer& other) {
 
 
 bool operator==(const Integer& a, const Integer& b) {
-    if (a.sign_ && b.sign_) {
+    if (a.sign_ == b.sign_) {
         return a.units_ == b.units_;
     }
-    else if (a.sign_ == true && b.sign_ == false) {
-        return false;
-    }
-    else if (a.sign_ == false && b.sign_ == true) {
-        return true;
-    }
+    return false;
 }
 
 
 bool operator!=(const Integer& a, const Integer& b) {
-    if (!(a.sign_ && b.sign_)) {
-        return !(a.units_ == b.units_);
-    }
-    else if (a.sign_ == true && b.sign_ == false) {
-        return true;
-    }
-    else if (a.sign_ == false && b.sign_ == true) {
-        return false;
-    }
+    return !(a == b);
 }
 
 
@@ -224,15 +211,7 @@ bool operator>(const Integer& a, const Integer& b) {
 
 
 bool operator<(const Integer& a, const Integer& b) {
-    if (!(a.sign_ && b.sign_)) {
-        return !(a.units_ < b.units_);
-    }
-    else if (a.sign_ == true && b.sign_ == false) {
-        return true;
-    }
-    else if (a.sign_ == false && b.sign_ == true) {
-        return false;
-    }
+    return b > a;
 }
 
 
