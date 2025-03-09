@@ -46,6 +46,32 @@ Real::Real(double value) {
 }
 
 
+// get
+
+Integer Real::getWhole() const {
+	return whole_;
+}
+
+
+Rational Real::getFractional() const {
+	return fractional_;
+}
+
+
+// set
+
+void Real::setWhole(const Integer obj) {
+	whole_ = obj;
+}
+
+
+void Real::setFractional(const Rational obj) {
+	fractional_ = obj;
+}
+
+
+// input/output
+
 std::ostream& operator<<(std::ostream& out, const Real& obj) {
 	if (obj.fractional_.getNumerator() == 0)
 	{

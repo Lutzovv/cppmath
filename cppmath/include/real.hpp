@@ -23,8 +23,17 @@ public:
         fractional_(fractional) {};
 
 
-    //input/output
+    // get
+    Integer getWhole() const;
+    Rational getFractional() const;
 
+
+    // set
+    void setWhole(const Integer);
+    void setFractional(const Rational);
+
+
+    // input/output
     friend std::ostream& operator<<(std::ostream& out, const Real& obj);
     friend std::istream& operator>>(std::istream& in, Real& obj);
 
