@@ -33,6 +33,9 @@ public:
     void setFractional(const Rational);
 
 
+    // is
+    bool isDecimal() const;
+
     // input/output
     friend std::ostream& operator<<(std::ostream& out, const Real& obj);
     friend std::istream& operator>>(std::istream& in, Real& obj);

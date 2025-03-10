@@ -70,6 +70,28 @@ void Real::setFractional(const Rational obj) {
 }
 
 
+// is
+
+bool Real::isDecimal() const {
+	Rational fractional = this->getFractional();
+
+	if (fractional.getNumerator() == 0) {
+		return true;
+	}
+
+	Integer denominator = fractional.getDenominator();
+
+	while (denominator % Integer(2) == Integer(0)) {
+		denominator = denominator / Integer(2);
+	}
+	while (denominator % Integer(5) == Integer(0)) {
+		denominator = denominator / Integer(5);
+	}
+
+	return denominator == 1;
+}
+
+
 // input/output
 
 std::ostream& operator<<(std::ostream& out, const Real& obj) {
