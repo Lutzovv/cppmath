@@ -92,6 +92,114 @@ bool Real::isDecimal() const {
 }
 
 
+//is
+
+bool Real::isSame(const Real& obj) const {
+	return this == &obj;
+}
+
+bool Real::isNegative() const {
+	return whole_.getSign() || fractional_.getNumeratorSign();
+}
+
+bool Real::isPositive() const {
+	return !isNegative();
+}
+
+
+//operators
+
+Real operator+(const Real& a, const Real& b) {
+	Integer whole = a.getWhole() + b.getWhole();
+	Rational fractional = a.getFractional() + b.getFractional();
+	return Real(whole, fractional);
+}
+
+
+Real operator-(const Real& a, const Real& b) {
+	Integer whole = a.getWhole() - b.getWhole();
+	Rational fractional = a.getFractional() - b.getFractional();
+	return Real(whole, fractional);
+}
+
+
+Real operator*(const Real& a, const Real& b) {
+	Integer whole = a.getWhole() * b.getWhole();
+	Rational fractional = a.getFractional() * b.getFractional();
+	return Real(whole, fractional);
+}
+
+
+Real operator/(const Real& a, const Real& b) {
+	Integer whole = a.getWhole() / b.getWhole();
+	Rational fractional = a.getFractional() / b.getFractional();
+	return Real(whole, fractional);
+}
+
+
+void Real::operator+=(const Real& other) {
+	*this = *this + other;
+}
+
+
+void Real::operator-=(const Real& other) {
+	*this = *this - other;
+}
+
+
+void Real::operator*=(const Real& other) {
+	*this = *this * other;
+}
+
+
+void Real::operator/=(const Real& other) {
+	*this = *this / other;
+}
+
+
+bool operator==(const Real& a, const Real& b) {
+	return a.getWhole() == b.getWhole() && a.getFractional() == b.getFractional();
+}
+
+
+bool operator!=(const Real& a, const Real& b) {
+	return !(a == b);
+}
+
+
+bool operator>(const Real& a, const Real& b) {
+	if (a.getWhole() > b.getWhole()) return true;
+	if (a.getWhole() == b.getWhole() && a.getFractional() > b.getFractional()) return true;
+	return false;
+}
+
+
+bool operator>=(const Real& a, const Real& b) {
+	return a > b || a == b;
+}
+
+
+bool operator<=(const Real& a, const Real& b) {
+	return a < b || a == b;
+}
+
+
+bool operator<(const Real& a, const Real& b) {
+	if (a.getWhole() < b.getWhole()) return true;
+	if (a.getWhole() == b.getWhole() && a.getFractional() < b.getFractional()) return true;
+	return false;
+}
+
+
+Real Real::operator+() const {
+	return *this;
+}
+
+
+Real Real::operator-() const {
+	return Real(-whole_, -fractional_);
+}
+
 // input/output
 
 std::ostream& operator<<(std::ostream& out, const Real& obj) {

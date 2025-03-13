@@ -3,7 +3,9 @@
 int main() {
     Integer aa = 1;
     Rational a = "5/3";
-    Real b(a);
+    Rational b = "1/2";
+    Real c(a);
+    Real d(b);
 
-    std::cout << b;
+    std::cout << c * d;
 }

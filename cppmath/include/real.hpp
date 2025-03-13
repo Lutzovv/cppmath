@@ -35,6 +35,32 @@ public:
 
     // is
     bool isDecimal() const;
+    bool isSame(const Real& obj) const;
+    bool isNegative() const;
+    bool isPositive() const;
+
+
+    //operators
+    friend Real operator+(const Real&, const Real&);
+    friend Real operator-(const Real&, const Real&);
+    friend Real operator*(const Real&, const Real&);
+    friend Real operator/(const Real&, const Real&);
+
+    void operator+=(const Real& other);
+    void operator-=(const Real& other);
+    void operator*=(const Real& other);
+    void operator/=(const Real& other);
+
+    friend bool operator==(const Real&, const Real&);
+    friend bool operator!=(const Real&, const Real&);
+    friend bool operator>(const Real&, const Real&);
+    friend bool operator<(const Real&, const Real&);
+    friend bool operator>=(const Real&, const Real&);
+    friend bool operator<=(const Real&, const Real&);
+
+    Real operator+() const;
+    Real operator-() const;
+
 
     // input/output
     friend std::ostream& operator<<(std::ostream& out, const Real& obj);
