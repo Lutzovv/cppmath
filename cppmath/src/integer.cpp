@@ -76,7 +76,7 @@ unsigned Integer::findLCM(Integer other) const {
 
 
 bool Integer::isCoprime(Integer other) const {
-    return findGCD(other) == 1 ? true : false;
+    return findGCD(other) == 1;
 }
 
 

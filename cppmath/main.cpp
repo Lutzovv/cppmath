@@ -2,10 +2,13 @@
 
 int main() {
     Integer aa = 1;
-    Rational a = "5/3";
-    Rational b = "1/2";
+    Rational a = "2/2";
+    Rational b = "2/2";
     Real c(a);
     Real d(b);
 
-    std::cout << c * d;
+    if (c == d) {
+        std::cout << "true\n";
+    }
+    std::cout << c - d;
 }

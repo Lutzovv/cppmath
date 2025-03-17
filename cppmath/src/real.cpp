@@ -2,7 +2,7 @@
 
 Real::Real(Integer whole, Rational fractional) {
 	whole_ = whole;
-	if (!fractional.isFractionProper()) {
+	if (fractional.isFractionProper()) {
 		whole_ = whole_ + (fractional.getNumerator() / fractional.getDenominator());
 		Integer newNumerator = fractional.getNumerator() % fractional.getDenominator();
 		fractional_ = Rational(newNumerator, fractional.getDenominator());
@@ -15,8 +15,14 @@ Real::Real(Integer whole, Rational fractional) {
 
 Real::Real(const Rational& obj) {
 	if (obj.isFractionProper()) {
-		whole_ = 0;
-		fractional_ = obj;
+		if (obj.isFractionProper()) {
+			whole_ = whole_ + (obj.getNumerator() / obj.getDenominator());
+			Integer newNumerator = obj.getNumerator() % obj.getDenominator();
+			fractional_ = Rational(newNumerator, obj.getDenominator());
+		}
+		else {
+			fractional_ = obj;
+		}
 	}
 	else {
 		whole_ = obj.getNumerator() / obj.getDenominator();
@@ -39,11 +45,6 @@ Real::Real(const Rational& obj) {
 //	whole_ = Integer(str.substr(0, del_pos));
 //	fractional_ = Integer(str.substr(del_pos + 1));
 //}
-
-
-Real::Real(double value) {
-
-}
 
 
 // get
@@ -207,7 +208,7 @@ std::ostream& operator<<(std::ostream& out, const Real& obj) {
 	{
 		return out << obj.whole_ << ".0";
 	}
-	return out << obj.whole_ << '.' << obj.fractional_;
+	return out << obj.whole_ << " (" << obj.fractional_ << ")";
 }
 
 
