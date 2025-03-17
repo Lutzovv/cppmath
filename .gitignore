@@ -400,3 +400,6 @@ FodyWeavers.xsd
 *.sln.iml
 
 main.cpp
+cppmath.vcxproj
+cppmath.vcxproj.filters
+cppmath.sln

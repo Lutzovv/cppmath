@@ -128,12 +128,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\integer.hpp" />
+    <ClInclude Include="include\Matrix.hpp" />
     <ClInclude Include="include\rational.hpp" />
     <ClInclude Include="include\real.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\integer.cpp" />
+    <ClCompile Include="src\Matrix.cpp" />
     <ClCompile Include="src\rational.cpp" />
     <ClCompile Include="src\real.cpp" />
   </ItemGroup>

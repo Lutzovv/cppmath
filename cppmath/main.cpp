@@ -1,14 +1,8 @@
 #include "./include/real.hpp"
+#include "./include/Matrix.hpp"
 
 int main() {
-    Integer aa = 1;
-    Rational a = "2/2";
-    Rational b = "2/2";
-    Real c(a);
-    Real d(b);
+    Matrix<int, 3, 3> mat;
 
-    if (c == d) {
-        std::cout << "true\n";
-    }
-    std::cout << c - d;
+    std::cout << mat;
 }
