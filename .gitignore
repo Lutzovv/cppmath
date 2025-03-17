@@ -399,7 +399,7 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-main.cpp
-cppmath.vcxproj
-cppmath.vcxproj.filters
+./src/main.cpp
+./src/cppmath.vcxproj
+./src/cppmath.vcxproj.filters
 cppmath.sln
