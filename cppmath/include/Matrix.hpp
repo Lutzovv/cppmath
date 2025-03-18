@@ -16,33 +16,33 @@ public:
 	~Matrix() = default;
 
 
-	unsigned long long size_coll() const { return Coll };
-	unsigned long long size_row() const { return Row };
+	unsigned long long size_coll() const { return Coll; };
+	unsigned long long size_row() const { return Row; };
 
 
 	const Matrix& operator=(const Matrix& other);
 	const Matrix& operator=(Matrix&& other);
 
-	friend const Matrix& operator+(const Matrix&, const Matrx&);
-	friend const Matrix& operator-(const Matrix&, const Matrx&);
-	friend const Matrix& operator*(const Matrix&, const Matrx&);
-	friend const Matrix& operator/(const Matrix&, const Matrx&);
-	friend const Matrix& operator^(const Matrix&, const Matrx&);
+	friend const Matrix& operator+(const Matrix&, const Matrix&);
+	friend const Matrix& operator-(const Matrix&, const Matrix&);
+	friend const Matrix& operator*(const Matrix&, const Matrix&);
+	friend const Matrix& operator/(const Matrix&, const Matrix&);
+	friend const Matrix& operator^(const Matrix&, const Matrix&);
 
-	friend const Matrix& operator+=(const Matrix&, const Matrx&);
-	friend const Matrix& operator-=(const Matrix&, const Matrx&);
-	friend const Matrix& operator*=(const Matrix&, const Matrx&);
-	friend const Matrix& operator/=(const Matrix&, const Matrx&);
+	friend const Matrix& operator+=(const Matrix&, const Matrix&);
+	friend const Matrix& operator-=(const Matrix&, const Matrix&);
+	friend const Matrix& operator*=(const Matrix&, const Matrix&);
+	friend const Matrix& operator/=(const Matrix&, const Matrix&);
 
-	friend bool operator==(const Matrix&, const Matrix&) const;
-	friend bool operator!=(const Matrix&, const Matrix&) const;
-	friend bool operator>(const Matrix&, const Matrix&) const;
-	friend bool operator<(const Matrix&, const Matrix&) const;
-	friend bool operator>=(const Matrix&, const Matrix&) const;
-	friend bool operator<=(const Matrix&, const Matrix&) const;
+	friend bool operator==(const Matrix&, const Matrix&);
+	friend bool operator!=(const Matrix&, const Matrix&);
+	friend bool operator>(const Matrix&, const Matrix&);
+	friend bool operator<(const Matrix&, const Matrix&);
+	friend bool operator>=(const Matrix&, const Matrix&);
+	friend bool operator<=(const Matrix&, const Matrix&);
 
-	Type& operator[](unsigned long long, unsigned long long);
-	const Type& operator[](unsigned long long, unsigned long long) const;
+	Type& operator[](unsigned long long);
+	const Type& operator[](unsigned long long) const;
 
 	Type& at(unsigned long long, unsigned long long);
 	const Type& at(unsigned long long, unsigned long long) const;
@@ -58,10 +58,10 @@ namespace std {
 	template<typename Type, unsigned long long Coll, unsigned long long Row>
 	struct hash<Matrix<Type, Coll, Row>>
 	{
-		size_t operator()(Matrix<Type, unsigned long long, unsigned long long>& obj) {
+		size_t operator()(const Matrix<Type, Coll, Row>& obj) {
 			size_t result{};
-			for (size_t i = 0; i < obj.rows(); i++) {
-				for (size_t j = 0; j < obj.columns(); j++) {
+			for (size_t i = 0; i < obj.size_row(); i++) {
+				for (size_t j = 0; j < obj.size_coll(); j++) {
 					result <<= 1;
 					result ^= hash<Type>()(obj[i][j]);
 				}
