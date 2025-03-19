@@ -1,8 +1,9 @@
+#pragma once
 #ifndef _RATIONAL_HPP_
 #define _RATIONAL_HPP_
 
 #include "integer.hpp"
-#include "sstream"
+#include <sstream>
 
 class Rational {
 public:

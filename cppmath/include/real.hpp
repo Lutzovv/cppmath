@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _REAL_HPP_
 #define _REAL_HPP_
 

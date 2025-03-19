@@ -1,10 +1,11 @@
+#pragma once
 #ifndef _INTEGER_HPP_
 #define _INTEGER_HPP_
 
-#include "iostream"
-#include "string"
-#include "cmath"
-#include "iomanip"
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <iomanip>
 
 class Integer {
 public:
