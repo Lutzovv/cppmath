@@ -218,28 +218,12 @@ bool operator<(const Rational& a, const Rational& b) {
 
 
 bool operator>=(const Rational& a, const Rational& b) {
-	Rational num1 = a;
-	Rational num2 = b;
-
-	Integer lcm = num1.denominator_.findLCM(num2.denominator_);
-
-	num1.numerator_ = (lcm / num1.denominator_) * num1.numerator_;
-	num2.numerator_ = (lcm / num2.denominator_) * num2.numerator_;
-
-	return num1.numerator_ >= num2.numerator_;
+	return a > b || a == b;
 }
 
 
 bool operator<=(const Rational& a, const Rational& b) {
-	Rational num1 = a;
-	Rational num2 = b;
-
-	Integer lcm = num1.denominator_.findLCM(num2.denominator_);
-
-	num1.numerator_ = (lcm / num1.denominator_) * num1.numerator_;
-	num2.numerator_ = (lcm / num2.denominator_) * num2.numerator_;
-
-	return num1.numerator_ <= num2.numerator_;
+	return a < b || a == b;
 }
 
 

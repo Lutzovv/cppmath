@@ -13,7 +13,11 @@ public:
     //constructor
 
     Integer() : Integer(false, 0u) {}
-    Integer(bool sign, unsigned units) : sign_(sign), units_(units) {};
+    Integer(bool sign, unsigned units) : sign_(sign), units_(units) {
+        if (units == 0) {
+            sign_ = false;
+        }
+    };
     Integer(bool sign, int units) : sign_(sign), units_(units) {};
     Integer(int number);
     Integer(const std::string& str);

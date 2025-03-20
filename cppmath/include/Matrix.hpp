@@ -48,7 +48,7 @@ public:
 		return *this;
 	}
 
-	friend const Matrix<Type, Coll, Row> operator+(const Matrix& a, const Matrix& b) {
+	friend const Matrix& operator+(const Matrix& a, const Matrix& b) {
 		if ((a.size_coll() == b.size_coll()) && (a.size_row() == b.size_row())) {
 			Matrix<Type, Coll, Row> res;
 			
@@ -59,14 +59,13 @@ public:
 			}
 			return res;
 		}
-		else
-		{
+		else {
 			std::cout << "ћатрицы должны быть одинакового размера!";
 			::exit(-1);
 		}
 	}
 
-	friend const Matrix<Type, Coll, Row> operator-(const Matrix& a, const Matrix& b) {
+	friend const Matrix& operator-(const Matrix& a, const Matrix& b) {
 		if ((a.size_coll() == b.size_coll()) && (a.size_row() == b.size_row())) {
 			Matrix<Type, Coll, Row> res;
 
@@ -85,14 +84,14 @@ public:
 	}
 
 
-	friend const Matrix<Type, Coll, Row> operator*(const Matrix& a, const Matrix& b) {
+	friend const Matrix& operator*(const Matrix& a, const Matrix& b) {
 		Matrix<Type, Coll, Row> res;
 
 		for (size_t i = 0; i < Coll; i++) {
 			for (size_t j = 0; j < Row; j++) {
 				res[i][j] = 0;
 				for (size_t k = 0; k < Row; k++) {
-					res[i][j] += data_[i][k] * b[k][j];
+					res[i][j] = res[i][j] + (a[i][k] * b[k][j]);
 				}
 			}
 		}
@@ -100,20 +99,83 @@ public:
 	}
 
 
-	friend const Matrix& operator/(const Matrix&, const Matrix&);
+	friend const Matrix& operator/(const Matrix&, const Matrix&) {
+		
+	}
+
+
 	friend const Matrix& operator^(const Matrix&, const Matrix&);
 
-	friend const Matrix& operator+=(const Matrix&, const Matrix&);
-	friend const Matrix& operator-=(const Matrix&, const Matrix&);
-	friend const Matrix& operator*=(const Matrix&, const Matrix&);
+	friend const Matrix& operator+=(Matrix& a, const Matrix& b) {
+		return a = a + b;
+	}
+
+
+	friend const Matrix& operator-=(Matrix& a, const Matrix& b) {
+		return a = a - b;
+	}
+
+
+	friend const Matrix& operator*=(const Matrix&, const Matrix&) {
+		return a = a * b;
+	}
+
+
 	friend const Matrix& operator/=(const Matrix&, const Matrix&);
 
-	friend bool operator==(const Matrix&, const Matrix&);
-	friend bool operator!=(const Matrix&, const Matrix&);
-	friend bool operator>(const Matrix&, const Matrix&);
-	friend bool operator<(const Matrix&, const Matrix&);
-	friend bool operator>=(const Matrix&, const Matrix&);
-	friend bool operator<=(const Matrix&, const Matrix&);
+	friend bool operator==(const Matrix& a, const Matrix& b) {
+		if (a.size_coll() == b.size_coll() && a.size_row() == b.size_row()) {
+			for (size_t i{}; i < a.size_coll(); i++) {
+				for (size_t j{}; j < a.size_row(); j++) {
+					if (a[i][j] != b[i][j]) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+
+	friend bool operator!=(const Matrix& a, const Matrix& b) {
+		return !(a == b);
+	}
+
+
+	friend bool operator>(const Matrix& a, const Matrix& b) {
+		Type sum_a, sum_b;
+
+		for (size_t i{}; i < a.size_coll(); i++) {
+			for (size_t j{}; j < a.size_row(); j++) {
+				sum_a += a[i][j];
+			}
+		}
+
+		for (size_t i{}; i < b.size_coll(); i++) {
+			for (size_t j{}; j < b.size_row(); j++) {
+				sum_b += b[i][j];
+			}
+		}
+
+		return sum_a > sum_b;
+	}
+
+
+	friend bool operator<(const Matrix& a, const Matrix& b) {
+		return b > a;
+	}
+
+
+	friend bool operator>=(const Matrix& a, const Matrix& b) {
+		return a > b || a == b;
+	}
+
+
+	friend bool operator<=(const Matrix& a, const Matrix& b) {
+		return a < b || a == b;
+	}
+
 
 	Type& operator()(unsigned long long i, unsigned long long j) {
 		return data_[i][j];
@@ -124,18 +186,22 @@ public:
 		return data_[i][j];
 	}
 
+
 	Type* operator[](unsigned long long i) {
 		if (i >= Coll) {
 			throw std::out_of_range("Row index out of range");
 		}
 		return data_[i];
 	}
+
+
 	const Type* operator[](unsigned long long i) const {
 		if (i >= Coll) {
 			throw std::out_of_range("Row index out of range");
 		}
 		return data_[i];
 	}
+
 
 	Type& at(unsigned long long i, unsigned long long j) {
 		if (i >= Coll || j >= Row) {

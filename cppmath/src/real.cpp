@@ -169,11 +169,21 @@ bool operator!=(const Real& a, const Real& b) {
 
 
 bool operator>(const Real& a, const Real& b) {
-	if (a.getWhole() > b.getWhole()) return true;
-	if (a.getWhole() == b.getWhole() && a.getFractional() > b.getFractional()) return true;
+	if (a.getWhole() > b.getWhole()) {
+		return true;
+	}
+
+	if (a.getWhole() == b.getWhole() &&
+		a.getFractional() > b.getFractional()) {
+		return true;
+	}
 	return false;
 }
 
+
+bool operator<(const Real& a, const Real& b) {
+	return b > a;
+}
 
 bool operator>=(const Real& a, const Real& b) {
 	return a > b || a == b;
@@ -182,13 +192,6 @@ bool operator>=(const Real& a, const Real& b) {
 
 bool operator<=(const Real& a, const Real& b) {
 	return a < b || a == b;
-}
-
-
-bool operator<(const Real& a, const Real& b) {
-	if (a.getWhole() < b.getWhole()) return true;
-	if (a.getWhole() == b.getWhole() && a.getFractional() < b.getFractional()) return true;
-	return false;
 }
 
 
