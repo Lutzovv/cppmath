@@ -10,14 +10,14 @@
 template<typename Type, unsigned long long Coll, unsigned long long Row>
 class Matrix {
 public:
-	Matrix() {
+	Matrix() {}
+	Matrix(const Matrix& other) {
 		for (size_t i = 0; i < Coll; i++) {
 			for (size_t j = 0; j < Row; j++) {
-				data_[i][j] = Type{};
+				data_[i][j] = other.data_[i][j];
 			}
 		}
 	}
-	Matrix(const Matrix& other);
 	Matrix(Matrix&& obj);
 	~Matrix() = default;
 
@@ -26,16 +26,34 @@ public:
 	unsigned long long size_row() const { return Row; };
 
 
-	/*const Matrix& operator=(const Matrix& other);
-	const Matrix& operator=(Matrix&& other);*/
+	const Matrix& operator=(const Matrix& other) {
+		if (this == &other) {
+			return *this;
+		}
+		for (size_t i = 0; i < Coll; i++) {
+			for (size_t j = 0; j < Row; j++) {
+				data_[i][j] = other.data_[i][j];
+			}
+		}
+		return *this;
+	}
 
-	friend const Matrix& operator+(const Matrix& a, const Matrix& b) {
-		if ((a.size_coll == b.size_coll) && (a.size_row == b.size_row)) {
-			unsigned long long c = a.size_coll();
-			Matrix<Type, c, a.size_row()> res;
 
-			for (int i{}; i < a.size_coll(); i++) {
-				for (int j{}; j < a.size_row(); j++) {
+	const Matrix& operator=(Matrix&& other) {
+		for (size_t i = 0; i < Coll; i++) {
+			for (size_t j = 0; j < Row; j++) {
+				data_[i][j] = other.data_[i][j];
+			}
+		}
+		return *this;
+	}
+
+	friend const Matrix<Type, Coll, Row> operator+(const Matrix& a, const Matrix& b) {
+		if ((a.size_coll() == b.size_coll()) && (a.size_row() == b.size_row())) {
+			Matrix<Type, Coll, Row> res;
+			
+			for (size_t i{}; i < a.size_coll(); i++) {
+				for (size_t j{}; j < a.size_row(); j++) {
 					res[i][j] = a[i][j] + b[i][j];
 				}
 			}
@@ -43,11 +61,45 @@ public:
 		}
 		else
 		{
-			throw "ћатрицы должны быть одинакового размера!";
+			std::cout << "ћатрицы должны быть одинакового размера!";
+			::exit(-1);
 		}
 	}
-	/*friend const Matrix& operator-(const Matrix&, const Matrix&);
-	friend const Matrix& operator*(const Matrix&, const Matrix&);
+
+	friend const Matrix<Type, Coll, Row> operator-(const Matrix& a, const Matrix& b) {
+		if ((a.size_coll() == b.size_coll()) && (a.size_row() == b.size_row())) {
+			Matrix<Type, Coll, Row> res;
+
+			for (size_t i{}; i < a.size_coll(); i++) {
+				for (size_t j{}; j < a.size_row(); j++) {
+					res[i][j] = a[i][j] - b[i][j];
+				}
+			}
+			return res;
+		}
+		else
+		{
+			std::cout << "ћатрицы должны быть одинакового размера!";
+			::exit(-1);
+		}
+	}
+
+
+	friend const Matrix<Type, Coll, Row> operator*(const Matrix& a, const Matrix& b) {
+		Matrix<Type, Coll, Row> res;
+
+		for (size_t i = 0; i < Coll; i++) {
+			for (size_t j = 0; j < Row; j++) {
+				res[i][j] = 0;
+				for (size_t k = 0; k < Row; k++) {
+					res[i][j] += data_[i][k] * b[k][j];
+				}
+			}
+		}
+		return res;
+	}
+
+
 	friend const Matrix& operator/(const Matrix&, const Matrix&);
 	friend const Matrix& operator^(const Matrix&, const Matrix&);
 
@@ -61,10 +113,16 @@ public:
 	friend bool operator>(const Matrix&, const Matrix&);
 	friend bool operator<(const Matrix&, const Matrix&);
 	friend bool operator>=(const Matrix&, const Matrix&);
-	friend bool operator<=(const Matrix&, const Matrix&);*/
+	friend bool operator<=(const Matrix&, const Matrix&);
 
-	Type& operator()(unsigned long long, unsigned long long);
-	const Type& operator()(unsigned long long, unsigned long long) const;
+	Type& operator()(unsigned long long i, unsigned long long j) {
+		return data_[i][j];
+	}
+
+
+	const Type& operator()(unsigned long long i, unsigned long long j) const {
+		return data_[i][j];
+	}
 
 	Type* operator[](unsigned long long i) {
 		if (i >= Coll) {
@@ -79,8 +137,21 @@ public:
 		return data_[i];
 	}
 
-	Type& at(unsigned long long, unsigned long long);
-	const Type& at(unsigned long long, unsigned long long) const;
+	Type& at(unsigned long long i, unsigned long long j) {
+		if (i >= Coll || j >= Row) {
+			throw std::out_of_range("Index out of range");
+		}
+		return data_[i][j];
+	}
+
+
+	const Type& at(unsigned long long i, unsigned long long j) const {
+		if (i >= Coll || j >= Row) {
+			throw std::out_of_range("Index out of range");
+		}
+		return data_[i][j];
+	}
+
 
 	friend std::ostream& operator<< (std::ostream& out, const Matrix& obj) {
 		for (int i = 0; i < Coll; i++) {

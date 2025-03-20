@@ -25,13 +25,13 @@ public:
     void setSign(bool sign);
     void setUnits(unsigned units);
 
-    
+
     //get
 
     bool getSign() const;
     unsigned getUnits() const;
 
-    
+
     //is
 
     bool isOdd() const;
@@ -45,7 +45,7 @@ public:
     unsigned findGCD(Integer other) const;
     unsigned findLCM(Integer other) const;
 
-    
+
     //operators
 
     friend Integer operator+(const Integer&, const Integer&);
