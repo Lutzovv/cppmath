@@ -11,6 +11,7 @@ Integer::Integer(int number) {
     }
 }
 
+
 Integer::Integer(const std::string& str) : Integer(std::stoi(str)) {}
 
 Integer::Integer(const char* char_arr) : Integer(std::stoi(char_arr)) {}

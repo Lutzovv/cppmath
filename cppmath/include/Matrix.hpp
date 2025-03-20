@@ -18,7 +18,15 @@ public:
 			}
 		}
 	}
-	Matrix(Matrix&& obj);
+
+
+	Matrix(Matrix&& other) {
+		for (size_t i = 0; i < Coll; i++) {
+			for (size_t j = 0; j < Row; j++) {
+				data_[i][j] = other.data_[i][j];
+			}
+		}
+	}
 	~Matrix() = default;
 
 
@@ -48,6 +56,7 @@ public:
 		return *this;
 	}
 
+
 	friend const Matrix& operator+(const Matrix& a, const Matrix& b) {
 		if ((a.size_coll() == b.size_coll()) && (a.size_row() == b.size_row())) {
 			Matrix<Type, Coll, Row> res;
@@ -64,6 +73,7 @@ public:
 			::exit(-1);
 		}
 	}
+
 
 	friend const Matrix& operator-(const Matrix& a, const Matrix& b) {
 		if ((a.size_coll() == b.size_coll()) && (a.size_row() == b.size_row())) {
@@ -116,7 +126,7 @@ public:
 	}
 
 
-	friend const Matrix& operator*=(const Matrix&, const Matrix&) {
+	friend const Matrix& operator*=(const Matrix& a, const Matrix& b) {
 		return a = a * b;
 	}
 
@@ -227,7 +237,9 @@ public:
 			out << "\n";
 		}
 		return out;
-	};
+	}
+
+
 	friend std::istream& operator>> (std::istream & in, const Matrix & obj);
 
 private:
