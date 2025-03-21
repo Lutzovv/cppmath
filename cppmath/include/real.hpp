@@ -24,23 +24,32 @@ public:
 
 
     // get
+
     Integer getWhole() const;
     Rational getFractional() const;
 
 
     // set
+
     void setWhole(const Integer);
     void setFractional(const Rational);
 
 
     // is
+
     bool isDecimal() const;
     bool isSame(const Real& obj) const;
     bool isNegative() const;
     bool isPositive() const;
 
 
+    //get
+
+    Real sqrt(const Real&);
+
+
     //operators
+
     friend Real operator+(const Real&, const Real&);
     friend Real operator-(const Real&, const Real&);
     friend Real operator*(const Real&, const Real&);
@@ -63,6 +72,7 @@ public:
 
 
     // input/output
+
     friend std::ostream& operator<<(std::ostream& out, const Real& obj);
     friend std::istream& operator>>(std::istream& in, Real& obj);
 

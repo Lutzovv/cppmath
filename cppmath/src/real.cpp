@@ -93,18 +93,43 @@ bool Real::isDecimal() const {
 }
 
 
-//is
-
 bool Real::isSame(const Real& obj) const {
 	return this == &obj;
 }
+
 
 bool Real::isNegative() const {
 	return whole_.getSign() || fractional_.getNumeratorSign();
 }
 
+
 bool Real::isPositive() const {
 	return !isNegative();
+}
+
+
+//get
+
+Real sqrt(const Real& obj) {
+	const double e = 1e-7;
+
+	if (obj < Real(0)) {
+		std::cout << "Ќевозможно найти корень из отрицательного числа!";
+		::exit(-1);
+	}
+
+	if (obj == Real(0)) {
+		return Real(0);
+	}
+
+	Real x = obj;
+	Real y;
+
+	//do {
+
+	//} while (y > e);
+
+	return Real(0);
 }
 
 

@@ -10,56 +10,13 @@
 template<typename Type, unsigned long long Coll, unsigned long long Row>
 class Matrix {
 public:
-	Matrix() {}
-	Matrix(const Matrix& other) {
-		for (size_t i = 0; i < Coll; i++) {
-			for (size_t j = 0; j < Row; j++) {
-				data_[i][j] = other.data_[i][j];
-			}
-		}
-	}
-
-
-	Matrix(Matrix&& other) {
-		for (size_t i = 0; i < Coll; i++) {
-			for (size_t j = 0; j < Row; j++) {
-				data_[i][j] = other.data_[i][j];
-			}
-		}
-	}
-	~Matrix() = default;
-
-
 	unsigned long long size_coll() const { return Coll; };
 	unsigned long long size_row() const { return Row; };
 
-
-	const Matrix& operator=(const Matrix& other) {
-		if (this == &other) {
-			return *this;
-		}
-		for (size_t i = 0; i < Coll; i++) {
-			for (size_t j = 0; j < Row; j++) {
-				data_[i][j] = other.data_[i][j];
-			}
-		}
-		return *this;
-	}
-
-
-	const Matrix& operator=(Matrix&& other) {
-		for (size_t i = 0; i < Coll; i++) {
-			for (size_t j = 0; j < Row; j++) {
-				data_[i][j] = other.data_[i][j];
-			}
-		}
-		return *this;
-	}
-
-
-	friend const Matrix& operator+(const Matrix& a, const Matrix& b) {
+	template<unsigned long long CollB, unsigned long long RowB>
+	friend const Matrix& operator+(const Matrix<Type, Coll, Row>& a, const Matrix<Type, CollB, RowB>& b) {
 		if ((a.size_coll() == b.size_coll()) && (a.size_row() == b.size_row())) {
-			Matrix<Type, Coll, Row> res;
+			Matrix<Type, std::min(Coll, CollB), std::min(Row, RowB)> res;
 			
 			for (size_t i{}; i < a.size_coll(); i++) {
 				for (size_t j{}; j < a.size_row(); j++) {
@@ -75,7 +32,8 @@ public:
 	}
 
 
-	friend const Matrix& operator-(const Matrix& a, const Matrix& b) {
+	template<unsigned long long CollB, unsigned long long RowB>
+	friend const Matrix& operator-(const Matrix<Type, Coll, Row>& a, const Matrix<Type, CollB, RowB>& b) {
 		if ((a.size_coll() == b.size_coll()) && (a.size_row() == b.size_row())) {
 			Matrix<Type, Coll, Row> res;
 
@@ -94,7 +52,8 @@ public:
 	}
 
 
-	friend const Matrix& operator*(const Matrix& a, const Matrix& b) {
+	template<unsigned long long CollB, unsigned long long RowB>
+	friend const Matrix& operator*(const Matrix<Type, Coll, Row>& a, const Matrix<Type, CollB, RowB>& b) {
 		Matrix<Type, Coll, Row> res;
 
 		for (size_t i = 0; i < Coll; i++) {
@@ -109,29 +68,35 @@ public:
 	}
 
 
-	friend const Matrix& operator/(const Matrix&, const Matrix&) {
+	template<unsigned long long CollB, unsigned long long RowB>
+	friend const Matrix& operator/(const Matrix<Type, Coll, Row>& a, const Matrix<Type, CollB, RowB>& b) {
 		
 	}
 
 
-	friend const Matrix& operator^(const Matrix&, const Matrix&);
-
-	friend const Matrix& operator+=(Matrix& a, const Matrix& b) {
+	template<unsigned long long CollB, unsigned long long RowB>
+	friend const Matrix& operator+=(Matrix<Type, Coll, Row>& a, const Matrix<Type, CollB, RowB>& b) {
 		return a = a + b;
 	}
 
 
-	friend const Matrix& operator-=(Matrix& a, const Matrix& b) {
+	template<unsigned long long CollB, unsigned long long RowB>
+	friend const Matrix& operator-=(Matrix<Type, Coll, Row>& a, const Matrix<Type, CollB, RowB>& b) {
 		return a = a - b;
 	}
 
 
-	friend const Matrix& operator*=(const Matrix& a, const Matrix& b) {
+	template<unsigned long long CollB, unsigned long long RowB>
+	friend const Matrix& operator*=(const Matrix<Type, Coll, Row>& a, const Matrix<Type, CollB, RowB>& b) {
 		return a = a * b;
 	}
 
 
-	friend const Matrix& operator/=(const Matrix&, const Matrix&);
+	template<unsigned long long CollB, unsigned long long RowB>
+	friend const Matrix& operator/=(Matrix<Type, Coll, Row>& a, const Matrix<Type, CollB, RowB>& b) {
+		return a = a / b;
+	}
+
 
 	friend bool operator==(const Matrix& a, const Matrix& b) {
 		if (a.size_coll() == b.size_coll() && a.size_row() == b.size_row()) {
@@ -150,40 +115,6 @@ public:
 
 	friend bool operator!=(const Matrix& a, const Matrix& b) {
 		return !(a == b);
-	}
-
-
-	friend bool operator>(const Matrix& a, const Matrix& b) {
-		Type sum_a, sum_b;
-
-		for (size_t i{}; i < a.size_coll(); i++) {
-			for (size_t j{}; j < a.size_row(); j++) {
-				sum_a += a[i][j];
-			}
-		}
-
-		for (size_t i{}; i < b.size_coll(); i++) {
-			for (size_t j{}; j < b.size_row(); j++) {
-				sum_b += b[i][j];
-			}
-		}
-
-		return sum_a > sum_b;
-	}
-
-
-	friend bool operator<(const Matrix& a, const Matrix& b) {
-		return b > a;
-	}
-
-
-	friend bool operator>=(const Matrix& a, const Matrix& b) {
-		return a > b || a == b;
-	}
-
-
-	friend bool operator<=(const Matrix& a, const Matrix& b) {
-		return a < b || a == b;
 	}
 
 
@@ -241,6 +172,11 @@ public:
 
 
 	friend std::istream& operator>> (std::istream & in, const Matrix & obj);
+
+
+	Type begin() { return data_[0][0]; }
+	Type end() { return data_[Row][Coll]; }
+
 
 private:
 	Type data_[Coll][Row];
