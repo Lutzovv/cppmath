@@ -98,7 +98,8 @@ public:
 	}
 
 
-	friend bool operator==(const Matrix& a, const Matrix& b) {
+	template<unsigned long long CollB, unsigned long long RowB>
+	friend bool operator==(const Matrix<Type, Coll, Row>& a, const Matrix<Type, CollB, RowB>& b) {
 		if (a.size_coll() == b.size_coll() && a.size_row() == b.size_row()) {
 			for (size_t i{}; i < a.size_coll(); i++) {
 				for (size_t j{}; j < a.size_row(); j++) {
@@ -113,7 +114,8 @@ public:
 	}
 
 
-	friend bool operator!=(const Matrix& a, const Matrix& b) {
+	template<unsigned long long CollB, unsigned long long RowB>
+	friend bool operator!=(const Matrix<Type, Coll, Row>& a, const Matrix<Type, CollB, RowB>& b) {
 		return !(a == b);
 	}
 
