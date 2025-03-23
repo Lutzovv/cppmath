@@ -2,12 +2,12 @@
 
 //set
 
-void point2d::setX(const Real x) {
+void point2d::setX(const Real& x) {
 	x_ = x;
 }
 
 
-void point2d::setY(const Real y) {
+void point2d::setY(const Real& y) {
 	y_ = y;
 }
 

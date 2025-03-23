@@ -14,8 +14,8 @@ public:
 
 	//set
 
-	void setX(const Real x);
-	void setY(const Real y);
+	void setX(const Real& x);
+	void setY(const Real& y);
 
 
 	//get
