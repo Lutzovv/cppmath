@@ -45,7 +45,7 @@ public:
 
     //get
 
-    Real sqrt(const Real&);
+    static Real sqrt(const Real&);
 
 
     //operators

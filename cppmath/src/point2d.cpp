@@ -48,7 +48,7 @@ bool point2d::isIdenticalPoints(const point2d& obj) {
 Real point2d::distanceBetweenPoints(const point2d& a, const point2d& b) {
 	Real x = b.x_ - a.x_;
 	Real y = b.y_ - a.y_;
-	return (x * x) + (y * y);
+	return Real::sqrt((x * x) + (y * y));
 }
 
 

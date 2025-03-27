@@ -110,26 +110,31 @@ bool Real::isPositive() const {
 
 //get
 
-Real sqrt(const Real& obj) {
-	const double e = 1e-7;
+Real Real::sqrt(const Real& obj) {
+	Real epsilon = Real(Integer(0), Rational(1, 10000000000));
 
-	if (obj < Real(0)) {
-		std::cout << "Ќевозможно найти корень из отрицательного числа!";
-		::exit(-1);
+	if (obj < Real(0))
+	{
+		throw std::invalid_argument("Ќевозможно извлечть и отрицательного числа.");
 	}
 
-	if (obj == Real(0)) {
+	if (obj == Real(0))
+	{
 		return Real(0);
 	}
 
 	Real x = obj;
-	Real y;
+	Real prev;
 
-	//do {
+	do {
+		prev = x;
+		x = (prev + obj / prev) / Real(Rational("2/1"));
 
-	//} while (y > e);
+		Real diff = (x > prev) ? (x - prev) : (prev - x);
 
-	return Real(0);
+	} while ((x - prev).isNegative() || (x - prev) > epsilon);
+
+	return x;
 }
 
 
